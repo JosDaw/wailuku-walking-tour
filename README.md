@@ -1,6 +1,6 @@
 # Wailuku Walking Tour
 
-Text to go here.
+Check for TODO: items to complete
 
 ## To run
 
