@@ -4,7 +4,7 @@ Text to go here.
 
 ## To run
 
-- npm next dev
+- npm run dev
 
 ## Deps added
 
