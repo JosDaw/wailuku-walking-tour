@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { slide as Menu } from 'react-burger-menu'
 import { ImCross } from 'react-icons/im'
-import { HiOutlineMenuAlt3 } from 'react-icons/hi'
+import { HiMenu } from 'react-icons/hi'
 
 export default function Navbar() {
   return (
@@ -12,7 +12,7 @@ export default function Navbar() {
           outerContainerId={'body'}
           right
           customCrossIcon={<ImCross className='text-primary'/>}
-          customBurgerIcon={<HiOutlineMenuAlt3 className='text-white'/>}
+          customBurgerIcon={<HiMenu className='text-white'/>}
         >
          <Link href="/"><a className='bm-item text-primary'>Home</a></Link>
          <Link href="/map"><a className='bm-item text-primary'>Map</a></Link>
@@ -21,7 +21,7 @@ export default function Navbar() {
          <Link href="/contact"><a className='bm-item text-primary'>Contact</a></Link>
         </Menu>
       </div>
-      <div id="page-wrap">
+      <div id="page-wrap" className='py-2'>
         <Link href="/">
           <a className="text-white normal-case text-2xl md:text-3xl px-0 m-1 md:m-4 float-left">
             Wailuku Walking Tour

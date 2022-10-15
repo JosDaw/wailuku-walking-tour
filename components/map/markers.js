@@ -17,7 +17,7 @@ const Markers = ({
         return 'text-primary'
 
       case 'culture':
-        return 'text-accent'
+        return 'text-info'
 
       case 'history':
         return 'text-secondary'
