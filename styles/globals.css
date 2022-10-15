@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Responsive React Burger Menu */
+#page-wrap {
+  text-align: center;
+  overflow: auto;
+}
+
+/* Individual menu item */
+.bm-item {
+  display: block;
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: all 0.2s;
+  font-size: 1.5rem;
+}
+
+.bm-item:hover {
+  opacity: 0.7;
+}
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: absolute;
+  width: 36px;
+  height: 30px;
+  top: 1rem;
+  right: 1rem;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #373a47;
+  border-radius: 0.25rem;
+}
+
+
+/* General sidebar styles */
+.bm-menu {
+  background: #ffff;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: #b8b7ad;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
