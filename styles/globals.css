@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    font-family: 'Nunito', 'Segoe UI', Arial, system-ui, sans-serif;
+  }
+}
+
 
 /* Responsive React Burger Menu */
 #page-wrap {
