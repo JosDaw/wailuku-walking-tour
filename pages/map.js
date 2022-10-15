@@ -235,7 +235,16 @@ export default function Map() {
         <title>Map | Wailuku Walking Tour</title>
       </Head>
 
-      {activePlace !== null && <PlaceModal isModalOpen={isModalOpen} handleCloseModal={()=>{setIsModalOpen(false); setActivePlace(null)}} placeId={activePlace}/> }
+      {activePlace !== null && (
+        <PlaceModal
+          isModalOpen={isModalOpen}
+          handleCloseModal={() => {
+            setIsModalOpen(false)
+            setActivePlace(null)
+          }}
+          placeId={activePlace}
+        />
+      )}
       <div>
         <Filter handleFilterQuery={handleFilterQuery} />
         <div style={{ height: '100vh', width: '100%' }} className="relative">
