@@ -14,6 +14,7 @@ import toCapitalise from '../hooks/toCapitalise'
 import Head from 'next/head'
 import UserMarker from '../components/map/user-marker'
 import UserLocation from '../components/map/user-location'
+import { useRouter } from 'next/router'
 
 export default function Map() {
   const [center, setCenter] = useState({ lat: 20.887944, lng: -156.501974 })
@@ -23,6 +24,7 @@ export default function Map() {
   const [userLocation, setUserLocation] = useState({ lat: 0, lng: 0 })
   const [showUserLocation, setShowUserLocation] = useState(false)
   const [status, setStatus] = useState('')
+  const router = useRouter()
 
   const env = process.env.NODE_ENV
   const apikey =
@@ -66,12 +68,16 @@ export default function Map() {
    * Handle Filter Queries
    * @param {string} type
    * @param {string} content
-   * TODO: not filtering correctly!
+   * TODO: All not filtering properly
    */
   const handleFilterQuery = (type, content) => {
     let lowerCaseQuery = content.toLowerCase()
     let firstCharQuery = toCapitalise(content)
     let thisAllPlaces = markersList
+
+    if (content === 'All') {
+      router.reload()
+    }
 
     if (type === 'type') {
       const placeRef = query(
@@ -124,20 +130,6 @@ export default function Map() {
 
         let finalArray = hideResults.concat(showResults)
         setMarkersList(finalArray)
-      })
-    } else {
-      const placeRef = query(collection(database, 'places'))
-      onSnapshot(placeRef, async (snapshot) => {
-        setMarkersList(
-          snapshot.docs.map((item) => {
-            return {
-              id: item.id,
-              placeName: item.data().placeName,
-              type: item.data().type,
-              coordinates: item.data().coordinates,
-            }
-          }),
-        )
       })
     }
   }
