@@ -4,7 +4,10 @@ import { IoMdLocate } from 'react-icons/io'
 const UserLocation = ({ handleUserLocation, status }) => {
   return (
     <div className="absolute left-0 bottom-10">
-      <button className="btn btn-success btn-outline btn-circle" onClick={handleUserLocation}>
+      <button
+        className="btn btn-success btn-outline btn-circle"
+        onClick={handleUserLocation}
+      >
         <IoMdLocate size={30} />
       </button>
       {status && (

@@ -1,4 +1,3 @@
-
 # Wailuku Walking Tour
 
 Text to go here.
@@ -15,3 +14,4 @@ Text to go here.
 - Google Map React
 - React Icons (https://react-icons.github.io/react-icons/)
 - React Burger Menu
+- Prettier & ESLint Config Prettier

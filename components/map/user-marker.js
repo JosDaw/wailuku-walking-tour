@@ -1,6 +1,6 @@
 import { MdPersonPinCircle } from 'react-icons/md'
 
-const UserMarker = ({zoomToUser }) => {
+const UserMarker = ({ zoomToUser }) => {
   return (
     <>
       <div className={`indicator`} onClick={zoomToUser}>

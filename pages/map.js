@@ -5,8 +5,8 @@ import {
   collection,
   getDocs,
   where,
-  query, 
-  onSnapshot
+  query,
+  onSnapshot,
 } from 'firebase/firestore'
 import Markers from '../components/map/markers'
 import Filter from '../components/map/filter'
@@ -16,7 +16,7 @@ import UserMarker from '../components/map/user-marker'
 import UserLocation from '../components/map/user-location'
 
 export default function Map() {
-  const [center, setCenter] = useState({lat: 20.887944, lng: -156.501974})
+  const [center, setCenter] = useState({ lat: 20.887944, lng: -156.501974 })
   const [zoom, setZoom] = useState(15)
   const [isLoadedMarkers, setIsLoadedMarkers] = useState(false)
   const [markersList, setMarkersList] = useState([])
@@ -32,8 +32,8 @@ export default function Map() {
   const mapsKey = apikey
 
   /**
- * Fetch initial markers
- */
+   * Fetch initial markers
+   */
   useEffect(() => {
     function getMarkers() {
       getDocs(collection(database, 'places')).then((data) => {
@@ -58,27 +58,29 @@ export default function Map() {
 
   /**
    * Handle the marker popup function
-   * @param {string} id 
+   * @param {string} id
    */
-  const handleMarker = (id) => {
-  }
+  const handleMarker = (id) => {}
 
   /**
    * Handle Filter Queries
-   * @param {string} type 
-   * @param {string} content 
+   * @param {string} type
+   * @param {string} content
    * TODO: not filtering correctly!
    */
-  const handleFilterQuery = (type, content) =>{
+  const handleFilterQuery = (type, content) => {
     let lowerCaseQuery = content.toLowerCase()
     let firstCharQuery = toCapitalise(content)
     let thisAllPlaces = markersList
 
     if (type === 'type') {
-      getDocs(collection(database, 'places'), where('type', '==', lowerCaseQuery)).then((data) => {
+      const placeRef = query(
+        collection(database, 'places'),
+        where('type', '==', lowerCaseQuery),
+      )
+      onSnapshot(placeRef, async (snapshot) => {
         setMarkersList(
-          data.docs.map((item) => {
-            console.log('met item', item.data().placeName, lowerCaseQuery)
+          snapshot.docs.map((item) => {
             return {
               id: item.id,
               placeName: item.data().placeName,
@@ -88,7 +90,7 @@ export default function Map() {
           }),
         )
       })
-    } else if(type === 'search') {
+    } else if (type === 'search') {
       let matchingTagIds = []
       const dbInfoInstance = collection(database, 'places')
       const typeRef = query(dbInfoInstance)
@@ -124,9 +126,10 @@ export default function Map() {
         setMarkersList(finalArray)
       })
     } else {
-      getDocs(collection(database, 'places')).then((data) => {
+      const placeRef = query(collection(database, 'places'))
+      onSnapshot(placeRef, async (snapshot) => {
         setMarkersList(
-          data.docs.map((item) => {
+          snapshot.docs.map((item) => {
             return {
               id: item.id,
               placeName: item.data().placeName,
@@ -140,10 +143,10 @@ export default function Map() {
   }
 
   /**
- * Get user location coordinates from browser
- * Center map on that location
- * Zoom in
- */
+   * Get user location coordinates from browser
+   * Center map on that location
+   * Zoom in
+   */
   const handleUserLocation = () => {
     if (!navigator.geolocation) {
       setStatus('Sorry, geolocation is not supported by your browser')
@@ -173,16 +176,16 @@ export default function Map() {
   }
 
   /**
- * Centralise map + zoom to a particular id
- * @param thisId
- */
+   * Centralise map + zoom to a particular id
+   * @param thisId
+   */
   const zoomToMarker = (thisId) => {
     const findInfoPos = markersList.map((e) => e.id).indexOf(thisId)
     const findGeocode = markersList[findInfoPos].generalLocation
     setCenter({ lat: findGeocode.latitude, lng: findGeocode.longitude })
     setZoom(17)
   }
-  
+
   /**
    * Reset zoom
    */
@@ -192,55 +195,84 @@ export default function Map() {
   }
 
   /**
- * User marker zoom function
- */
+   * User marker zoom function
+   */
   const zoomToUser = () => {
     setCenter({ lat: userLocation.lat, lng: userLocation.lng })
     setZoom(18)
   }
 
+  /**
+   * Google Map route
+   * @param {*} map
+   * @param {*} maps
+   * TODO: fix route
+   */
+  const apiIsLoaded = (map, maps) => {
+    const directionsService = new google.maps.DirectionsService()
+    const directionsRenderer = new google.maps.DirectionsRenderer()
+    directionsRenderer.setMap(map)
+    const origin = { lat: 20.889359, lng: -156.502371 }
+    const destination = { lat: 20.887982, lng: -156.501485 }
+
+    directionsService.route(
+      {
+        origin: origin,
+        destination: destination,
+        travelMode: google.maps.TravelMode.WALKING,
+      },
+      (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          directionsRenderer.setDirections(result)
+        } else {
+          console.error(result)
+        }
+      },
+    )
+  }
+
   return (
     <>
-    <Head>
-    <title>Map | Wailuku Walking Tour</title>
-    </Head>
-    
-    <div>
-      <Filter handleFilterQuery={handleFilterQuery}/>
-      <div style={{ height: '100vh', width: '100%' }} className="relative">
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: mapsKey }}
-          center={center}
-          zoom={zoom}
-        >
-         {isLoadedMarkers &&
-            markersList.map((marker, i) => (
-              <Markers
-                lat={marker.coordinates.latitude}
-                lng={marker.coordinates.longitude}
-                handleMarkerClick={handleMarker}
-                key={i}
-                id={marker.id}
-                type={marker.type}
-                hide={marker.hide}
+      <Head>
+        <title>Map | Wailuku Walking Tour</title>
+      </Head>
+
+      <div>
+        <Filter handleFilterQuery={handleFilterQuery} />
+        <div style={{ height: '100vh', width: '100%' }} className="relative">
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: mapsKey }}
+            center={center}
+            zoom={zoom}
+            yesIWantToUseGoogleMapApiInternals
+            onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps)}
+          >
+            {isLoadedMarkers &&
+              markersList.map((marker, i) => (
+                <Markers
+                  lat={marker.coordinates.latitude}
+                  lng={marker.coordinates.longitude}
+                  handleMarkerClick={handleMarker}
+                  key={i}
+                  id={marker.id}
+                  type={marker.type}
+                  hide={marker.hide}
+                />
+              ))}
+            {showUserLocation && (
+              <UserMarker
+                lat={userLocation.lat}
+                lng={userLocation.lng}
+                zoomToUser={zoomToUser}
               />
-            ))
-          }
-          {showUserLocation && (
-            <UserMarker
-              lat={userLocation.lat}
-              lng={userLocation.lng}
-              zoomToUser={zoomToUser}
-            />
-          )}
-         
-        </GoogleMapReact>
-        <UserLocation
+            )}
+          </GoogleMapReact>
+          <UserLocation
             handleUserLocation={handleUserLocation}
             status={status}
           />
+        </div>
       </div>
-    </div>
     </>
   )
 }

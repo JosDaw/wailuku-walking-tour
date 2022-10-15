@@ -1,15 +1,7 @@
 import React, { useState } from 'react'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 
-const Markers = ({
-  lat,
-  lng,
-  handleMarkerClick,
-  key,
-  id,
-  type,
-  hide,
-}) => {
+const Markers = ({ lat, lng, handleMarkerClick, key, id, type, hide }) => {
   const markerColorType = () => {
     const shrinkLocationType = type.toLowerCase()
     switch (shrinkLocationType) {

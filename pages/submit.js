@@ -1,6 +1,3 @@
-
 export default function Submit() {
-  return (
-    <div>SUBMIT!</div>
-  )
+  return <div>SUBMIT!</div>
 }
