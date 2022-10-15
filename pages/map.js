@@ -15,6 +15,7 @@ import Head from 'next/head'
 import UserMarker from '../components/map/user-marker'
 import UserLocation from '../components/map/user-location'
 import { useRouter } from 'next/router'
+import PlaceModal from '../components/map/place-modal'
 
 export default function Map() {
   const [center, setCenter] = useState({ lat: 20.887944, lng: -156.501974 })
@@ -23,6 +24,8 @@ export default function Map() {
   const [markersList, setMarkersList] = useState([])
   const [userLocation, setUserLocation] = useState({ lat: 0, lng: 0 })
   const [showUserLocation, setShowUserLocation] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [activePlace, setActivePlace] = useState(null)
   const [status, setStatus] = useState('')
   const router = useRouter()
 
@@ -62,7 +65,10 @@ export default function Map() {
    * Handle the marker popup function
    * @param {string} id
    */
-  const handleMarker = (id) => {}
+  const handleMarker = (id) => {
+    setActivePlace(id)
+    setIsModalOpen(true)
+  }
 
   /**
    * Handle Filter Queries
@@ -229,6 +235,7 @@ export default function Map() {
         <title>Map | Wailuku Walking Tour</title>
       </Head>
 
+      {activePlace !== null && <PlaceModal isModalOpen={isModalOpen} handleCloseModal={()=>{setIsModalOpen(false); setActivePlace(null)}} placeId={activePlace}/> }
       <div>
         <Filter handleFilterQuery={handleFilterQuery} />
         <div style={{ height: '100vh', width: '100%' }} className="relative">

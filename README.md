@@ -12,6 +12,7 @@ Text to go here.
 - DaisyUI
 - Firebase
 - Google Map React
-- React Icons (https://react-icons.github.io/react-icons/)
+- React Icons
 - React Burger Menu
 - Prettier & ESLint Config Prettier
+- Remark, Remark-HTML
