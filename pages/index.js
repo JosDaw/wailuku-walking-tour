@@ -34,7 +34,7 @@ export default function Home() {
           Discover the history, art, and culture or share your own stories about
           the community.
         </p>
-        <Link href="/submit">
+        <Link href="/map">
           <button className="btn btn-info mt-4">Get Started</button>
         </Link>
       </div>
@@ -49,8 +49,8 @@ export default function Home() {
           </div>
           <h2 className="text-2xl font-semibold">Pick your Tour</h2>
           <p className="font-light">
-            Share your own story or history of the area and help build a
-            community led story of Wailuku.
+            Choose a tour of Wailuku’s public art, history, culture, or mix and
+            match!
           </p>
         </div>
         <div className="mt-4">

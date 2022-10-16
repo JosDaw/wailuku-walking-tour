@@ -4,6 +4,7 @@ import { BsStopCircleFill } from 'react-icons/bs'
 import { useState } from 'react'
 import { Timestamp } from 'firebase/firestore'
 import AudioPlayer from './universal/audio-player'
+import { IoMdAlert } from 'react-icons/io'
 
 const Record = ({ handleAudioUpload, recordingURL }) => {
   const [isRecording, setIsRecording] = useState(false)
@@ -28,8 +29,13 @@ const Record = ({ handleAudioUpload, recordingURL }) => {
 
   return (
     <div className="mt-4 flex flex-col items-center">
-      {mediaBlobUrl && <div><AudioPlayer url={mediaBlobUrl} /></div> }
+      {mediaBlobUrl && (
+        <div>
+          <AudioPlayer url={mediaBlobUrl} />
+        </div>
+      )}
       <p className="font-light my-3">Press the microphone to record.</p>
+
       <div className="flex gap-x-2">
         <button
           onClick={() => {
@@ -54,8 +60,19 @@ const Record = ({ handleAudioUpload, recordingURL }) => {
         </button>
       </div>
 
+      {isRecording && (
+        <div className="font-bold text-lg text-red-700 text-center flex flex-col justify-center items-center">
+          <IoMdAlert size={35} />
+          <p>Recording in Progress</p>
+        </div>
+      )}
+
       <div className="text-center">
-        <button className="btn my-2" onClick={handleConvertMediaBlob}>
+        <button
+          className="btn my-2"
+          onClick={handleConvertMediaBlob}
+          disabled={isRecording}
+        >
           Upload Audio
         </button>
         {recordingURL && (

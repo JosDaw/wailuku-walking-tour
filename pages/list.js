@@ -10,10 +10,16 @@ import {
 import Filter from '../components/map/filter'
 import toCapitalise from '../hooks/toCapitalise'
 import { useRouter } from 'next/router'
+import PlaceModal from '../components/map/place-modal'
+import ListCards from '../components/list-cards'
 
 export default function List() {
   const [isLoadedMarkers, setIsLoadedMarkers] = useState(false)
   const [markersList, setMarkersList] = useState([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [updateList, setUpdateList] = useState(false)
+  const [activePlace, setActivePlace] = useState(null)
+  const [activeFilter, setActiveFilter] = useState('All')
   const router = useRouter()
 
   /**
@@ -29,6 +35,7 @@ export default function List() {
               placeName: item.data().placeName,
               type: item.data().type,
               coordinates: item.data().coordinates,
+              info: item.data().info,
             }
           }),
         )
@@ -45,9 +52,9 @@ export default function List() {
    * Handle Filter Queries
    * @param {string} type
    * @param {string} content
-   * TODO: All not filtering properly
    */
   const handleFilterQuery = (type, content) => {
+    setActiveFilter(content)
     let lowerCaseQuery = content.toLowerCase()
     let firstCharQuery = toCapitalise(content)
     let thisAllPlaces = markersList
@@ -69,6 +76,7 @@ export default function List() {
               placeName: item.data().placeName,
               type: item.data().type,
               coordinates: item.data().coordinates,
+              info: item.data().info,
             }
           }),
         )
@@ -109,15 +117,47 @@ export default function List() {
         setMarkersList(finalArray)
       })
     }
+
+    setUpdateList(!updateList)
+  }
+
+  /**
+   * Handle the marker popup function
+   * @param {string} id
+   */
+  const handleMarker = (id) => {
+    setActivePlace(id)
+    setIsModalOpen(true)
   }
 
   return (
-    <div>
-      <Filter handleFilterQuery={handleFilterQuery} />
-      {isLoadedMarkers &&
-        markersList.map((place, index) => {
-          return <div key={`indivPlace${index}`}> {place.placeName} </div>
-        })}
-    </div>
+    <>
+      {activePlace !== null && (
+        <PlaceModal
+          isModalOpen={isModalOpen}
+          handleCloseModal={() => {
+            setIsModalOpen(false)
+            setActivePlace(null)
+          }}
+          placeId={activePlace}
+        />
+      )}
+      <div className="flex flex-col">
+        <Filter
+          handleFilterQuery={handleFilterQuery}
+          existingFilter={activeFilter}
+        />
+        {isLoadedMarkers &&
+          markersList.map((place, index) => {
+            return (
+              <ListCards
+                place={place}
+                key={`indivPlaceCard${index}${updateList}`}
+                handleMarker={handleMarker}
+              />
+            )
+          })}
+      </div>
+    </>
   )
 }

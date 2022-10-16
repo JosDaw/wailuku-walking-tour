@@ -109,7 +109,6 @@ export default function Map() {
    * Handle Filter Queries
    * @param {string} type
    * @param {string} content
-   * TODO: All not filtering properly
    */
   const handleFilterQuery = (type, content) => {
     setActiveFilter(content)
@@ -224,7 +223,6 @@ export default function Map() {
    * Google Map route
    * @param {*} map
    * @param {*} maps
-   * TODO: fix route
    */
   const apiIsLoaded = (map, maps) => {
     if (activeFilter !== 'All') {

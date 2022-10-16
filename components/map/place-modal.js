@@ -13,6 +13,7 @@ import AudioPlayer from '../universal/audio-player'
 import MarkdownText from '../universal/markdown-text'
 import Carousel from './carousel'
 import CommunityStories from './community-stories'
+import LoadingSpinner from '../universal/loading-spinner'
 
 const PlaceModal = ({ isModalOpen, handleCloseModal, placeId }) => {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -83,7 +84,7 @@ const PlaceModal = ({ isModalOpen, handleCloseModal, placeId }) => {
         >
           <FaTimes size={25} />
         </button>
-        {isLoaded && (
+        {isLoaded ? (
           <div className="flex flex-col justify-center items-center">
             {placePhotos && (
               <Carousel
@@ -103,6 +104,8 @@ const PlaceModal = ({ isModalOpen, handleCloseModal, placeId }) => {
             <MarkdownText content={placeInfo.info} />
             <CommunityStories stories={userStories} id={placeId} />
           </div>
+        ) : (
+          <LoadingSpinner text="Getting Information" />
         )}
       </div>
     </div>
