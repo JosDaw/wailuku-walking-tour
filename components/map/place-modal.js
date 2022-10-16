@@ -6,19 +6,14 @@ import {
   where,
   query,
 } from 'firebase/firestore'
-import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { database } from '../../config/firebase'
 import AudioPlayer from '../universal/audio-player'
 import MarkdownText from '../universal/markdown-text'
 import Carousel from './carousel'
+import CommunityStories from './community-stories'
 
-/**
- * TODO: audio play
- * TODO: multiple photos should show as carousel
- * TODO: user stories section
- */
 const PlaceModal = ({ isModalOpen, handleCloseModal, placeId }) => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [placeInfo, setPlaceInfo] = useState({})
@@ -63,9 +58,10 @@ const PlaceModal = ({ isModalOpen, handleCloseModal, placeId }) => {
             return {
               id: item.id,
               name: item.data().name,
-              link: item.data().photoLink,
-              recordingLink: item.data().recordingLink,
+              link: item.data().photoLink || null,
+              recordingLink: item.data().recordingLink || null,
               story: item.data().story,
+              dateCreated: item.data().dateCreated,
             }
           }),
         )
@@ -105,15 +101,7 @@ const PlaceModal = ({ isModalOpen, handleCloseModal, placeId }) => {
             <AudioPlayer url={placeInfo.audioLink} />
 
             <MarkdownText content={placeInfo.info} />
-
-            <div className="mt-6 flex flex-col items-center">
-              <h1 className="text-3xl font-bold text-primary text-center my-2">
-                Community Stories
-              </h1>
-              <Link href={`/submit?id=${placeInfo.id}`}>
-                <button className="btn btn-lg">Share Your Story</button>
-              </Link>
-            </div>
+            <CommunityStories stories={userStories} id={placeId} />
           </div>
         )}
       </div>

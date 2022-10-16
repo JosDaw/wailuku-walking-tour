@@ -16,5 +16,4 @@ Check for TODO: items to complete
 - React Burger Menu
 - Prettier & ESLint Config Prettier
 - Remark, Remark-HTML
-- React Responsive Carousel
 - React Player
