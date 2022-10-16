@@ -5,5 +5,5 @@ export default function Footer() {
         Copyright © 2022 - All rights reserved, Wailuku Walking Tour
       </p>
     </footer>
-  )
+  );
 }

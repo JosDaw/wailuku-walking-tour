@@ -4,10 +4,9 @@
 
 @layer base {
   html {
-    font-family: 'Nunito', 'Segoe UI', Arial, system-ui, sans-serif;
+    font-family: "Nunito", "Segoe UI", Arial, system-ui, sans-serif;
   }
 }
-
 
 /* Responsive React Burger Menu */
 #page-wrap {
@@ -42,7 +41,6 @@
   background: #373a47;
   border-radius: 0.25rem;
 }
-
 
 /* General sidebar styles */
 .bm-menu {
