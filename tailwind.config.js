@@ -6,7 +6,15 @@ module.exports = {
     './layout/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      spacing: {
+        '1': '8px',
+        '2': '12px',
+        '3': '20px',
+        '4': '32px',
+        '5': '52px',
+      }
+    },
   },
   plugins: [require('daisyui')],
   daisyui: {
