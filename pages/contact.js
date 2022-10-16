@@ -3,6 +3,8 @@ import Head from 'next/head'
 import { useState } from 'react'
 import LoadingSpinner from '../components/universal/loading-spinner'
 import { database } from '../config/firebase'
+import { MdEmail } from 'react-icons/md'
+import { BsTelephoneFill } from 'react-icons/bs'
 
 export default function Contact() {
   const [name, setName] = useState('')
@@ -39,21 +41,27 @@ export default function Contact() {
         <title>Contact | Wailuku Walking Tour</title>
       </Head>
       <div className="px-4 flex flex-col">
-        <header className="m-2">
+        <header className="m-2 mb-4">
           <h1 className="text-3xl text-primary font-bold my-4">Contact</h1>
-          <h3 className="text-lg">SmallTownBig@smalltownbig.org</h3>
-          <h3 className="text-lg">808-123-5678</h3>
+          <div className="flex mb-2">
+            <MdEmail className="mr-2 text-primary" />
+            <h3 className="text-sm">SmallTownBig@smalltownbig.org</h3>
+          </div>
+          <div className="flex">
+            <BsTelephoneFill className="mr-2 text-primary" />
+            <h3 className="text-sm">808-123-5678</h3>
+          </div>
         </header>
         <div>
           {isComplete ? (
             <div>
-              <h3 className="text-2xl text-warning text-center">
+              <h3 className="text-xl text-warning text-center">
                 Thank you for submitting a message! We will reply to you soon!{' '}
               </h3>
             </div>
           ) : (
             <>
-              <div className="flex flex-col my-2">
+              <div className="flex flex-col mb-3">
                 <input
                   type="text"
                   placeholder="Name"
@@ -71,7 +79,7 @@ export default function Contact() {
                   type="email"
                   placeholder="Email"
                   disabled={isSaving}
-                  className="input input-bordered w-full max-w-xs"
+                  className="input input-bordered w-full max-w-xs font-light"
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value)
@@ -81,7 +89,7 @@ export default function Contact() {
 
               <div className="flex flex-col my-2">
                 <textarea
-                  className="textarea textarea-bordered"
+                  className="mt-2 textarea textarea-bordered w-full max-w-xs px-3 py-2 font-light"
                   disabled={isSaving}
                   placeholder="Message"
                   defaultValue={message}
@@ -95,7 +103,7 @@ export default function Contact() {
                 <LoadingSpinner text="Saving" />
               ) : (
                 <button
-                  className="btn btn-secondary w-full my-4 text-white text-2xl font-bold"
+                  className="btn btn-neutral w-full my-4"
                   onClick={handleSubmit}
                 >
                   Send Message
