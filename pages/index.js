@@ -3,6 +3,7 @@ import TourCards from '../components/tourCards'
 import pickYourTour from '../public/assets/pickYourTour.svg'
 import shareYourStory from '../public/assets/shareYourStory.svg'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   const heroBanner = {
@@ -33,7 +34,9 @@ export default function Home() {
           Discover the history, art, and culture or share your own stories about
           the community.
         </p>
-        <button className="btn btn-info mt-4">Get Started</button>
+        <Link href="/submit">
+          <button className="btn btn-info mt-4">Get Started</button>
+        </Link>
       </div>
 
       <div>

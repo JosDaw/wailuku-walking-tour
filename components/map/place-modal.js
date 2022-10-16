@@ -6,11 +6,11 @@ import {
   where,
   query,
 } from 'firebase/firestore'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { database } from '../../config/firebase'
+import AudioPlayer from '../universal/audio-player'
 import MarkdownText from '../universal/markdown-text'
 import Carousel from './carousel'
 
@@ -102,6 +102,8 @@ const PlaceModal = ({ isModalOpen, handleCloseModal, placeId }) => {
             <h1 className="text-3xl font-bold text-primary text-center my-2">
               {placeInfo.placeName}
             </h1>
+            <AudioPlayer url={placeInfo.audioLink} />
+
             <MarkdownText content={placeInfo.info} />
 
             <div className="mt-6 flex flex-col items-center">

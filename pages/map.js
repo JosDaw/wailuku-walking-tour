@@ -31,6 +31,7 @@ export default function Map() {
   const [updateMap, setUpdateMap] = useState(false)
   const [activeFilter, setActiveFilter] = useState('All')
   const router = useRouter()
+  const { type } = router.query
 
   const env = process.env.NODE_ENV
   const apikey =
@@ -65,6 +66,37 @@ export default function Map() {
   }, [isLoadedMarkers])
 
   /**
+   * Load route on link
+   */
+  useEffect(() => {
+    if (!type) {
+      return
+    }
+    const fetchRouteByType = () => {
+      if (type) {
+        setActiveFilter(type)
+        const placeRef = query(
+          collection(database, 'places'),
+          where('type', '==', type.toLowerCase()),
+        )
+        onSnapshot(placeRef, async (snapshot) => {
+          setMarkersList(
+            snapshot.docs.map((item) => {
+              return {
+                id: item.id,
+                placeName: item.data().placeName,
+                type: item.data().type,
+                coordinates: item.data().coordinates,
+              }
+            }),
+          )
+        })
+      }
+    }
+    fetchRouteByType()
+  }, [type])
+
+  /**
    * Handle the marker popup function
    * @param {string} id
    */
@@ -86,6 +118,7 @@ export default function Map() {
     let thisAllPlaces = markersList
 
     if (content === 'All') {
+      router.push(`/map`)
       router.reload()
     }
 
@@ -180,17 +213,6 @@ export default function Map() {
   }
 
   /**
-   * Centralise map + zoom to a particular id
-   * @param thisId
-   */
-  const zoomToMarker = (thisId) => {
-    const findInfoPos = markersList.map((e) => e.id).indexOf(thisId)
-    const findGeocode = markersList[findInfoPos].generalLocation
-    setCenter({ lat: findGeocode.latitude, lng: findGeocode.longitude })
-    setZoom(17)
-  }
-
-  /**
    * User marker zoom function
    */
   const zoomToUser = () => {
@@ -207,7 +229,9 @@ export default function Map() {
   const apiIsLoaded = (map, maps) => {
     if (activeFilter !== 'All') {
       const directionsService = new google.maps.DirectionsService()
-      const directionsRenderer = new google.maps.DirectionsRenderer()
+      const directionsRenderer = new google.maps.DirectionsRenderer({
+        suppressMarkers: true,
+      })
       directionsRenderer.setMap(map)
 
       let mapRoute = getMapRoute(activeFilter)
@@ -250,7 +274,10 @@ export default function Map() {
         />
       )}
       <div>
-        <Filter handleFilterQuery={handleFilterQuery} />
+        <Filter
+          handleFilterQuery={handleFilterQuery}
+          existingFilter={activeFilter}
+        />
         <div style={{ height: '100vh', width: '100%' }} className="relative">
           <GoogleMapReact
             bootstrapURLKeys={{ key: mapsKey }}

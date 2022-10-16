@@ -17,3 +17,4 @@ Check for TODO: items to complete
 - Prettier & ESLint Config Prettier
 - Remark, Remark-HTML
 - React Responsive Carousel
+- React Player

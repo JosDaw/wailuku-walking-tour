@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { HiOutlineSearch } from 'react-icons/hi'
-const Filter = ({ handleFilterQuery }) => {
-  const [activeFilter, setActiveFilter] = useState('All')
+const Filter = ({ handleFilterQuery, existingFilter }) => {
+  const [activeFilter, setActiveFilter] = useState(existingFilter)
   const [filterQuery, setFilterQuery] = useState('')
+
+  useEffect(() => {
+    if (activeFilter !== existingFilter) {
+      setActiveFilter(existingFilter)
+    }
+  }, [activeFilter, existingFilter])
 
   const handleFilter = (type, content) => {
     setActiveFilter(content)
