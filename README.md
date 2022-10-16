@@ -1,14 +1,15 @@
 # Wailuku Walking Tour
 
-Check for TODO: items to complete
+This walking tour app of Wailuku, Maui aims to support the community building efforts of local organizations by building awareness of and accessibility to the history, culture, and public art.
 
-## To run
+## To run locally
 
+- npm install
 - npm run dev
 
-## Deps added
+## Libraries Used
 
-- TailwindCss
+- Tailwind CSS
 - DaisyUI
 - Firebase
 - Google Map React
