@@ -24,7 +24,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="min-h-full flex flex-col items-center">
+      <div className="min-h-full flex flex-col">
         <div style={heroBanner.container}></div>
         <h1 className="text-3xl text-primary font-bold mt-3">
           Remember your roots, explore Wailuku town
