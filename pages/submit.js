@@ -187,7 +187,7 @@ export default function Submit() {
               </div>
               <div>
                 <textarea
-                  className="mt-2 input input-bordered w-full max-w-xs px-3 py-2 font-light"
+                  className="mt-2 textarea textarea-bordered w-full max-w-xs px-3 py-2 font-light"
                   placeholder="Write your story..."
                   value={story}
                   onChange={(e) => setStory(e.target.value)}
@@ -227,7 +227,10 @@ export default function Submit() {
                 {isSaving ? (
                   <LoadingSpinner text="Submitting" />
                 ) : (
-                  <button className="btn btn-info mt-5" onClick={handleSubmit}>
+                  <button
+                    className="btn btn-neutral w-full mt-5"
+                    onClick={handleSubmit}
+                  >
                     Submit
                   </button>
                 )}

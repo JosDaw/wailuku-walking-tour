@@ -35,7 +35,7 @@ export default function Home() {
           the community.
         </p>
         <Link href="/map">
-          <button className="btn btn-info mt-4">Get Started</button>
+          <button className="btn btn-neutral mt-4">Get Started</button>
         </Link>
       </div>
 
