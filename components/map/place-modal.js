@@ -7,6 +7,7 @@ import {
   query,
 } from 'firebase/firestore'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { database } from '../../config/firebase'
@@ -102,6 +103,15 @@ const PlaceModal = ({ isModalOpen, handleCloseModal, placeId }) => {
               {placeInfo.placeName}
             </h1>
             <MarkdownText content={placeInfo.info} />
+
+            <div className="mt-6 flex flex-col items-center">
+              <h1 className="text-3xl font-bold text-primary text-center my-2">
+                Community Stories
+              </h1>
+              <Link href={`/submit?id=${placeInfo.id}`}>
+                <button className="btn btn-lg">Share Your Story</button>
+              </Link>
+            </div>
           </div>
         )}
       </div>
