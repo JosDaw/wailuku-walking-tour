@@ -37,8 +37,8 @@ const Filter = ({ handleFilterQuery, existingFilter }) => {
   return (
     <div className="flex flex-row flex-wrap justify-evenly m2-4">
       {filterButtons()}
-      <div className="form-control my-2">
-        <div className="input-group">
+      <div className="form-control my-2 w-full">
+        <div className="input-group flex items-center justify-center">
           <input
             type="text"
             placeholder="Search…"

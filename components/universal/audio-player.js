@@ -30,7 +30,7 @@ const AudioPlayer = ({ url }) => {
         }}
       />
       <div className="flex flex-col items-center justify-center rounded-xl border border-player-light-border ">
-        <h3 className='text-primary font-bold'>Listen Now</h3>
+        <h3 className="text-primary font-bold">Listen Now</h3>
         <progress
           className="progress progress-secondary w-56 m-1"
           value={played}

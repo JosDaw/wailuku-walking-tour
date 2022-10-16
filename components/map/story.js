@@ -8,7 +8,7 @@ const Story = ({ story }) => {
   }
 
   return (
-    <div className="bg-white max-w-xl rounded-2xl px-2 py-4 shadow-lg hover:shadow-2xl transition duration-500 mt-4 flex flex-col items-center">
+    <div className="w-full bg-white rounded-2xl px-2 py-4 shadow-lg hover:shadow-2xl transition duration-500 mt-4 flex flex-col items-center">
       {story.link && (
         <div className="my-2">
           <Image
