@@ -3,6 +3,7 @@ import { MdKeyboardVoice } from 'react-icons/md'
 import { BsStopCircleFill } from 'react-icons/bs'
 import { useState } from 'react'
 import { Timestamp } from 'firebase/firestore'
+import AudioPlayer from './universal/audio-player'
 
 const Record = ({ handleAudioUpload, recordingURL }) => {
   const [isRecording, setIsRecording] = useState(false)
@@ -27,7 +28,7 @@ const Record = ({ handleAudioUpload, recordingURL }) => {
 
   return (
     <div className="mt-4 flex flex-col items-center">
-      <audio src={mediaBlobUrl} controls autoPlay />
+      {mediaBlobUrl && <div><AudioPlayer url={mediaBlobUrl} /></div> }
       <p className="font-light my-3">Press the microphone to record.</p>
       <div className="flex gap-x-2">
         <button

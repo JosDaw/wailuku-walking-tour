@@ -16,12 +16,13 @@ const AudioPlayer = ({ url }) => {
   }
 
   return (
-    <div className="bg-[#F8FAFC] w-fit flex flex-col items-center justify-center mt-2 mb-4 rounded-xl ">
+    <div className="flex flex-row items-center justify-center my-2">
       <ReactPlayer
         url={url}
         playing={isPlaying}
-        width="100%"
-        height="100%"
+        width="10%"
+        height="10%"
+        className="hidden"
         onProgress={(e) => {
           handleProgress(e)
         }}
@@ -29,7 +30,7 @@ const AudioPlayer = ({ url }) => {
           setDuration(e)
         }}
       />
-      <div className="flex flex-col items-center justify-center rounded-xl border border-player-light-border ">
+      <div className="flex flex-col items-center justify-center rounded-xl border bg-[#F8FAFC]">
         <h3 className="text-primary font-bold">Listen Now</h3>
         <progress
           className="progress progress-secondary w-56 m-1"
