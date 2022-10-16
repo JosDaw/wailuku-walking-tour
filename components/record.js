@@ -61,13 +61,13 @@ const Record = ({ handleAudioUpload, recordingURL }) => {
       </div>
 
       {isRecording && (
-        <div className="font-bold text-lg text-red-700 text-center flex flex-col justify-center items-center">
+        <div className="font-bold text-md text-red-700 text-center flex flex-col justify-center items-center mt-2">
           <IoMdAlert size={35} />
-          <p>Recording in Progress</p>
+          <p className="font-light">Recording in Progress</p>
         </div>
       )}
 
-      <div className="text-center">
+      <div className="text-center mt-2">
         <button
           className="btn my-2"
           onClick={handleConvertMediaBlob}
