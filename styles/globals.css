@@ -63,3 +63,8 @@
 .bm-overlay {
   background: rgba(0, 0, 0, 0.3);
 }
+
+.prose a {
+  color: #256047;
+  text-decoration: underline;
+}
