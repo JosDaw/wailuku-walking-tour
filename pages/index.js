@@ -12,7 +12,7 @@ export default function Home() {
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       width: '100%',
-      height: '15rem'
+      height: '17rem'
     }
   }
 
