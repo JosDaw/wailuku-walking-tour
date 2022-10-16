@@ -1,8 +1,3 @@
-import { collection, onSnapshot, query, where } from 'firebase/firestore'
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import { database } from '../config/firebase'
-
 const ListCards = ({ place, handleMarker }) => {
   let placeInfo = place.info || ''
   const shortenedString = `${placeInfo.substring(0, 150)} ${
@@ -10,7 +5,7 @@ const ListCards = ({ place, handleMarker }) => {
   }`
 
   return (
-    <div className="card mx-2 my-2 shadow-xl py-2 bg-[#F8FAFC] relative">
+    <div className="card mx-2 my-2 shadow-xl py-2 bg-accent relative">
       <div className="card-body">
         <h2 className="card-title">{place.placeName}</h2>
         <p>{shortenedString}</p>

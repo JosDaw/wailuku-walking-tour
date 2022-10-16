@@ -12,6 +12,7 @@ import toCapitalise from '../hooks/toCapitalise'
 import { useRouter } from 'next/router'
 import PlaceModal from '../components/map/place-modal'
 import ListCards from '../components/list-cards'
+import Head from 'next/head'
 
 export default function List() {
   const [isLoadedMarkers, setIsLoadedMarkers] = useState(false)
@@ -132,6 +133,9 @@ export default function List() {
 
   return (
     <>
+      <Head>
+        <title>Places | Wailuku Walking Tour</title>
+      </Head>
       {activePlace !== null && (
         <PlaceModal
           isModalOpen={isModalOpen}
