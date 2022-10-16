@@ -16,6 +16,7 @@ import UserMarker from '../components/map/user-marker'
 import UserLocation from '../components/map/user-location'
 import { useRouter } from 'next/router'
 import PlaceModal from '../components/map/place-modal'
+import getMapRoute from '../hooks/getMapRoute'
 
 export default function Map() {
   const [center, setCenter] = useState({ lat: 20.887944, lng: -156.501974 })
@@ -27,6 +28,8 @@ export default function Map() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [activePlace, setActivePlace] = useState(null)
   const [status, setStatus] = useState('')
+  const [updateMap, setUpdateMap] = useState(false)
+  const [activeFilter, setActiveFilter] = useState('All')
   const router = useRouter()
 
   const env = process.env.NODE_ENV
@@ -77,6 +80,7 @@ export default function Map() {
    * TODO: All not filtering properly
    */
   const handleFilterQuery = (type, content) => {
+    setActiveFilter(content)
     let lowerCaseQuery = content.toLowerCase()
     let firstCharQuery = toCapitalise(content)
     let thisAllPlaces = markersList
@@ -138,6 +142,8 @@ export default function Map() {
         setMarkersList(finalArray)
       })
     }
+
+    setUpdateMap(!updateMap)
   }
 
   /**
@@ -185,14 +191,6 @@ export default function Map() {
   }
 
   /**
-   * Reset zoom
-   */
-  const resetZoom = () => {
-    setCenter({ lat: 36.4109, lng: 128.1591 })
-    setZoom(7.5)
-  }
-
-  /**
    * User marker zoom function
    */
   const zoomToUser = () => {
@@ -207,26 +205,32 @@ export default function Map() {
    * TODO: fix route
    */
   const apiIsLoaded = (map, maps) => {
-    const directionsService = new google.maps.DirectionsService()
-    const directionsRenderer = new google.maps.DirectionsRenderer()
-    directionsRenderer.setMap(map)
-    const origin = { lat: 20.889359, lng: -156.502371 }
-    const destination = { lat: 20.887982, lng: -156.501485 }
+    if (activeFilter !== 'All') {
+      const directionsService = new google.maps.DirectionsService()
+      const directionsRenderer = new google.maps.DirectionsRenderer()
+      directionsRenderer.setMap(map)
 
-    directionsService.route(
-      {
-        origin: origin,
-        destination: destination,
-        travelMode: google.maps.TravelMode.WALKING,
-      },
-      (result, status) => {
-        if (status === google.maps.DirectionsStatus.OK) {
-          directionsRenderer.setDirections(result)
-        } else {
-          console.error(result)
-        }
-      },
-    )
+      let mapRoute = getMapRoute(activeFilter)
+      let origin = mapRoute.origin
+      let destination = mapRoute.destination
+      let waypoints = mapRoute.waypoints
+
+      directionsService.route(
+        {
+          origin: origin,
+          destination: destination,
+          travelMode: google.maps.TravelMode.WALKING,
+          waypoints: waypoints,
+        },
+        (result, status) => {
+          if (status === google.maps.DirectionsStatus.OK) {
+            directionsRenderer.setDirections(result)
+          } else {
+            console.error(result)
+          }
+        },
+      )
+    }
   }
 
   return (
@@ -254,6 +258,7 @@ export default function Map() {
             zoom={zoom}
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps)}
+            key={updateMap}
           >
             {isLoadedMarkers &&
               markersList.map((marker, i) => (

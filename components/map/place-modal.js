@@ -7,10 +7,12 @@ import {
   query,
 } from 'firebase/firestore'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { database } from '../../config/firebase'
 import MarkdownText from '../universal/markdown-text'
+import Carousel from './carousel'
 
 /**
  * TODO: audio play
@@ -22,6 +24,7 @@ const PlaceModal = ({ isModalOpen, handleCloseModal, placeId }) => {
   const [placeInfo, setPlaceInfo] = useState({})
   const [placePhotos, setPlacePhotos] = useState([])
   const [userStories, setUserStories] = useState([])
+  const [photoIndex, setPhotoIndex] = useState(0)
 
   /**
    * Fetch place information
@@ -86,28 +89,29 @@ const PlaceModal = ({ isModalOpen, handleCloseModal, placeId }) => {
         </button>
         {isLoaded && (
           <div className="flex flex-col justify-center items-center">
-            {placePhotos &&
-              placePhotos.map((photo, index) => {
-                const myLoader = ({}) => {
-                  return photo.link
-                }
-                return (
-                  <Image
-                    loader={myLoader}
-                    src={photo.link}
-                    alt={placeInfo.placeName}
-                    width={250}
-                    height={350}
-                    unoptimized={true}
-                    key={`placeImage${index}`}
-                    className="rounded-lg"
-                  />
-                )
-              })}
+            {placePhotos && (
+              <Carousel
+                allImages={placePhotos}
+                setPhotoIndex={(e) => {
+                  setPhotoIndex(e)
+                }}
+                photoIndex={photoIndex}
+                placeName={placeInfo.placeName}
+              />
+            )}
             <h1 className="text-3xl font-bold text-primary text-center my-2">
               {placeInfo.placeName}
             </h1>
             <MarkdownText content={placeInfo.info} />
+
+            <div className="mt-6 flex flex-col items-center">
+              <h1 className="text-3xl font-bold text-primary text-center my-2">
+                Community Stories
+              </h1>
+              <Link href={`/submit?id=${placeInfo.id}`}>
+                <button className="btn btn-lg">Share Your Story</button>
+              </Link>
+            </div>
           </div>
         )}
       </div>
