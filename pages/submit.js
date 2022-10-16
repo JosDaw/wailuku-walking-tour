@@ -153,12 +153,12 @@ export default function Submit() {
             Share your unique perspective, family history, or personal
             experience with this place!
           </p>
-          <p className="font-light mt-2">Record or write your story below</p>
+          <p className="font-light mt-2">Record or write your story below.</p>
 
           {isComplete ? (
-            <h2 className="m-4 text-2xl text-primary">
+            <h3 className="m-4 text-xl text-primary font-semibold">
               Thank you for sharing your story!
-            </h2>
+            </h3>
           ) : (
             <>
               {' '}
@@ -168,10 +168,10 @@ export default function Submit() {
                   recordingURL={recordingURL}
                 />
               </div>
-              <div>
-                <h3>Choose a Place</h3>
+              <div className="mt-4">
+                <h3 className="font-bold mb-2">Choose a Place</h3>
                 <select
-                  className={`input input-bordered w-full max-w-xs`}
+                  className={`input input-bordered w-full max-w-xs mb-2 font-light`}
                   onChange={(e) => {
                     setSelectedPlacesId(e.target.value)
                   }}
@@ -187,7 +187,7 @@ export default function Submit() {
               </div>
               <div>
                 <textarea
-                  className="mt-2 input input-bordered w-full max-w-xs"
+                  className="mt-2 input input-bordered w-full max-w-xs px-3 py-2 font-light"
                   placeholder="Write your story..."
                   value={story}
                   onChange={(e) => setStory(e.target.value)}
@@ -198,16 +198,16 @@ export default function Submit() {
                     placeholder="Name (optional)"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered w-full max-w-xs font-light"
                   />
                 </div>
-                <div className="mt-2">
+                <div className="mt-3">
                   <div className="form-control">
                     <div className="input-group">
                       <input
                         type="file"
                         onChange={handleFileChange}
-                        className="input input-bordered w-full max-w-xs"
+                        className="input input-bordered w-full max-w-xs px-3 py-2 font-light"
                       />
                       {isUploading ? (
                         <LoadingSpinner text="Uploading" />
@@ -223,16 +223,16 @@ export default function Submit() {
                   </div>
                 </div>
               </div>
-              <div className="flex justify-center items-center">
+              <div className="flex flex-col justify-center items-center">
                 {isSaving ? (
                   <LoadingSpinner text="Submitting" />
                 ) : (
-                  <button className="btn btn-info mt-4" onClick={handleSubmit}>
+                  <button className="btn btn-info mt-5" onClick={handleSubmit}>
                     Submit
                   </button>
                 )}
                 {errorMsg && (
-                  <h3 className="font-bold text-xl text-center">{errorMsg}</h3>
+                  <h3 className="font-bold text-center mt-3">{errorMsg}</h3>
                 )}
               </div>
             </>
