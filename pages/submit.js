@@ -208,11 +208,9 @@ export default function Submit() {
                         type="file"
                         onChange={handleFileChange}
                         className="input input-bordered w-full max-w-xs px-3 py-2 font-light"
-                      /> 
+                      />
                       {isUploading ? (
-                        <LoadingSpinner 
-                          text="Uploading"
-                        />
+                        <LoadingSpinner text="Uploading" />
                       ) : (
                         <button className="btn" onClick={handleImageUpload}>
                           Upload
